@@ -1,3 +1,3 @@
 Welcome!
 
-This is the website https://aledro25.github.io/DORA-QR/.
+This is the [website](https://aledro25.github.io/DORA-QR/).
