@@ -1,0 +1,68 @@
+body {
+    font-family: Arial, sans-serif;
+    text-align: center;
+    padding: 50px;
+}
+
+.form-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+}
+
+.form-group {
+    display: flex;
+    align-items: center;
+    margin: 10px 0;
+    width: 100%;
+    max-width: 500px;
+}
+
+.form-group label {
+    font-weight: bold;
+    width: 150px;
+    text-align: right;
+    margin-right: 10px;
+}
+
+.form-group input,
+.form-group select {
+    padding: 10px;
+    width: 100%;
+    max-width: 300px;
+    box-sizing: border-box;
+}
+
+#generateButton {
+    margin-top: 20px;
+    padding: 12px 20px;
+    font-size: 16px;
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+#generateButton:hover {
+    background-color: #45a049;
+}
+
+#qrCodeResult img {
+    margin-top: 20px;
+    max-width: 100%;
+    height: auto;
+}
+
+#downloadSection {
+    margin-top: 30px;
+    text-align: center;
+}
+
+#downloadSection select,
+#downloadSection button {
+    padding: 10px;
+    margin: 10px;
+}
