@@ -16,20 +16,37 @@
             padding: 10px;
             margin: 5px;
         }
+        #qrCodeResult img {
+            margin-top: 20px;
+            max-width: 100%;
+            height: auto;
+        }
     </style>
 </head>
 <body>
     <h1>DORA-QR Generator</h1>
-    <input type="text" id="url" placeholder="Enter URL">
-    <input type="number" id="size" placeholder="Size (px)" value="250">
+    <p>Generate a QR code from a URL and download it in your preferred format!</p>
+
+    <!-- Input for URL -->
+    <input type="text" id="url" placeholder="Enter URL" required>
+    
+    <!-- Input for QR code size -->
+    <input type="number" id="size" placeholder="Size (px)" value="250" required>
+    
+    <!-- Dropdown for error correction level -->
     <select id="ecl">
         <option value="L">L (Low)</option>
         <option value="M" selected>M (Medium)</option>
         <option value="Q">Q (High)</option>
         <option value="H">H (Highest)</option>
     </select>
+    <br><br>
+    
     <button onclick="generateQRCode()">Generate QR Code</button>
     
+    <br><br>
+    
+    <!-- Dropdown for format selection -->
     <label for="format">Select Format: </label>
     <select id="format">
         <option value="jpeg" selected>JPEG</option>
@@ -38,7 +55,8 @@
         <option value="pdf">PDF</option>
     </select>
     <button onclick="downloadQRCode()">Download QR Code</button>
-
+    
+    <!-- Display generated QR Code -->
     <div id="qrCodeResult"></div>
 
     <script>
@@ -106,4 +124,3 @@
     </script>
 </body>
 </html>
-
