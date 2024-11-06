@@ -25,7 +25,7 @@
             <input type="number" id="size" placeholder="Size (px)" value="250" required>
         </div>
 
-        <!-- Dropdown per il livello di correzione degli errori -->
+        <!-- Dropdown per il livello di correzione degli errori con icona informativa -->
         <div class="form-group">
             <label for="ecl">Error Correction Level:</label>
             <select id="ecl">
@@ -34,6 +34,7 @@
                 <option value="Q">Q (High)</option>
                 <option value="H">H (Highest)</option>
             </select>
+            <span class="info-icon" title="Level of redundancy in QR code data. Higher levels protect better from damage, but reduce available data space.">ℹ️</span>
         </div>
 
         <button id="generateButton" onclick="generateQRCode()">Generate QR Code</button>
