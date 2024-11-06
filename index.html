@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DORA-QR Generator</title>
+    <script src="https://cdn.jsdelivr.net/npm/qrcode@1.4.4/build/qrcode.min.js"></script>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            padding: 50px;
+        }
+        input, button, select {
+            padding: 10px;
+            margin: 5px;
+        }
+    </style>
+</head>
+<body>
+    <h1>DORA-QR Generator</h1>
+    <input type="text" id="url" placeholder="Enter URL">
+    <input type="number" id="size" placeholder="Size (px)">
+    <select id="ecl">
+        <option value="L">L (Low)</option>
+        <option value="M" selected>M (Medium)</option>
+        <option value="Q">Q (High)</option>
+        <option value="H">H (Highest)</option>
+    </select>
+    <button onclick="generateQRCode()">Generate QR Code</button>
+    <div id="qrCodeResult"></div>
+
+    <script>
+        function generateQRCode() {
+            const url = document.getElementById("url").value;
+            const size = parseInt(document.getElementById("size").value) || 250;
+            const ecl = document.getElementById("ecl").value;
+
+            QRCode.toDataURL(url, {
+                width: size,
+                errorCorrectionLevel: ecl
+            }, function (err, url) {
+                if (err) {
+                    console.error(err);
+                    return;
+                }
+                document.getElementById("qrCodeResult").innerHTML = `<img src="${url}" alt="QR Code">`;
+            });
+        }
+    </script>
+</body>
+</html>
