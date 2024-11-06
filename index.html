@@ -21,6 +21,9 @@
             max-width: 100%;
             height: auto;
         }
+        #downloadSection {
+            margin-top: 30px;
+        }
     </style>
 </head>
 <body>
@@ -40,87 +43,4 @@
         <option value="Q">Q (High)</option>
         <option value="H">H (Highest)</option>
     </select>
-    <br><br>
-    
-    <button onclick="generateQRCode()">Generate QR Code</button>
-    
-    <br><br>
-    
-    <!-- Dropdown for format selection -->
-    <label for="format">Select Format: </label>
-    <select id="format">
-        <option value="jpeg" selected>JPEG</option>
-        <option value="png">PNG</option>
-        <option value="svg">SVG</option>
-        <option value="pdf">PDF</option>
-    </select>
-    <button onclick="downloadQRCode()">Download QR Code</button>
-    
-    <!-- Display generated QR Code -->
-    <div id="qrCodeResult"></div>
-
-    <script>
-        let generatedQRCode = ''; // To store the generated QR code URL
-
-        function generateQRCode() {
-            const url = document.getElementById("url").value;
-            const size = parseInt(document.getElementById("size").value) || 250;
-            const ecl = document.getElementById("ecl").value;
-
-            QRCode.toDataURL(url, {
-                width: size,
-                errorCorrectionLevel: ecl
-            }, function (err, url) {
-                if (err) {
-                    console.error(err);
-                    return;
-                }
-                generatedQRCode = url; // Save the generated QR code
-                document.getElementById("qrCodeResult").innerHTML = `<img src="${url}" alt="QR Code">`;
-            });
-        }
-
-        function downloadQRCode() {
-            if (!generatedQRCode) {
-                alert('Please generate a QR code first.');
-                return;
-            }
-
-            const format = document.getElementById("format").value;
-            let link = document.createElement('a');
-            link.href = generatedQRCode;
-            
-            if (format === 'svg') {
-                // If the user selected SVG, generate the SVG format instead of PNG
-                QRCode.toString(document.getElementById("url").value, {
-                    type: 'svg',
-                    width: parseInt(document.getElementById("size").value) || 250,
-                    errorCorrectionLevel: document.getElementById("ecl").value
-                }, function (err, svg) {
-                    if (err) {
-                        console.error(err);
-                        return;
-                    }
-                    const svgBlob = new Blob([svg], {type: 'image/svg+xml'});
-                    const svgUrl = URL.createObjectURL(svgBlob);
-                    link.href = svgUrl;
-                    link.download = 'qr_code.svg';  // Specify the file name
-                    link.click();
-                });
-            } else if (format === 'pdf') {
-                // If the user selected PDF, generate PDF file with jsPDF
-                const { jsPDF } = window.jspdf;
-                const doc = new jsPDF();
-                doc.addImage(generatedQRCode, 'JPEG', 10, 10, 180, 180); // Adjust the size if needed
-                link.href = doc.output('bloburl');
-                link.download = 'qr_code.pdf'; // Specify the file name
-                link.click();
-            } else {
-                // For PNG or JPEG, use the URL generated earlier
-                link.download = `qr_code.${format}`;  // Specify the file name with selected extension
-                link.click();
-            }
-        }
-    </script>
-</body>
-</html>
+    <br><br
