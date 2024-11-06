@@ -1,65 +1,56 @@
-let generatedQRCode = ''; // Memorizza il codice QR generato (URL)
-let qrCodeSVG = ''; // Memorizza il codice QR SVG
+// Verifica integrità jsPDF
+document.addEventListener("DOMContentLoaded", function() {
+    if (typeof window.jspdf === "undefined") {
+        console.error("Error: jsPDF library failed to load or has been tampered with.");
+    } else {
+        console.log("jsPDF library loaded successfully and integrity verified.");
+    }
+});
 
+// Funzione per generare il QR code
 function generateQRCode() {
     const url = document.getElementById("url").value;
     const size = parseInt(document.getElementById("size").value) || 250;
     const ecl = document.getElementById("ecl").value;
 
-    // Genera il QR Code come URL Data (PNG/JPEG)
-    QRCode.toDataURL(url, {
+    QRCode.toCanvas(document.getElementById("qrCodeResult"), url, {
         width: size,
         errorCorrectionLevel: ecl
-    }, function (err, url) {
-        if (err) {
-            console.error(err);
-            return;
+    }, function (error) {
+        if (error) console.error(error);
+        else {
+            document.getElementById("downloadSection").style.display = "block";
+            console.log("QR Code generated successfully.");
         }
-        generatedQRCode = url;
-        document.getElementById("qrCodeResult").innerHTML = `<img src="${url}" alt="QR Code">`;
-
-        // Genera il QR Code come stringa SVG
-        QRCode.toString(url, {
-            type: 'svg',
-            width: size,
-            errorCorrectionLevel: ecl
-        }, function (err, svg) {
-            if (err) {
-                console.error(err);
-                return;
-            }
-            qrCodeSVG = svg;
-        });
-
-        document.getElementById("downloadSection").style.display = 'block';
     });
 }
 
+// Funzione per scaricare il QR code nel formato scelto
 function downloadQRCode() {
-    if (!generatedQRCode) {
-        alert('Please generate a QR code first.');
-        return;
-    }
-
     const format = document.getElementById("format").value;
-    let link = document.createElement('a');
+    const canvas = document.getElementById("qrCodeResult").querySelector("canvas");
 
-    if (format === 'svg') {
-        const svgBlob = new Blob([qrCodeSVG], {type: 'image/svg+xml'});
-        const svgUrl = URL.createObjectURL(svgBlob);
-        link.href = svgUrl;
-        link.download = 'qr_code.svg';
-        link.click();
-    } else if (format === 'pdf') {
+    if (format === "pdf") {
         const { jsPDF } = window.jspdf;
-        const doc = new jsPDF();
-        doc.addImage(generatedQRCode, 'JPEG', 10, 10, 180, 180);
-        link.href = doc.output('bloburl');
-        link.download = 'qr_code.pdf';
+        const pdf = new jsPDF();
+        pdf.addImage(canvas.toDataURL("image/png"), "PNG", 15, 40, 180, 180);
+        pdf.save("QRCode.pdf");
+    } else if (format === "svg") {
+        const svgData = `
+            <svg xmlns="http://www.w3.org/2000/svg" width="${canvas.width}" height="${canvas.height}">
+                <image href="${canvas.toDataURL("image/png")}" width="100%" height="100%"/>
+            </svg>`;
+        const blob = new Blob([svgData], { type: "image/svg+xml;charset=utf-8" });
+        const url = URL.createObjectURL(blob);
+        const link = document.createElement("a");
+        link.href = url;
+        link.download = "QRCode.svg";
         link.click();
+        URL.revokeObjectURL(url);
     } else {
-        link.href = generatedQRCode;
-        link.download = `qr_code.${format}`;
+        const link = document.createElement("a");
+        link.download = `QRCode.${format}`;
+        link.href = canvas.toDataURL(`image/${format === "jpeg" ? "jpeg" : "png"}`);
         link.click();
     }
 }
