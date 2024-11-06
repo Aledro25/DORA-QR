@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>DORA-QR Generator</title>
     <script src="https://cdn.jsdelivr.net/npm/qrcode@1.4.4/build/qrcode.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -20,7 +21,7 @@
 <body>
     <h1>DORA-QR Generator</h1>
     <input type="text" id="url" placeholder="Enter URL">
-    <input type="number" id="size" placeholder="Size (px)">
+    <input type="number" id="size" placeholder="Size (px)" value="250">
     <select id="ecl">
         <option value="L">L (Low)</option>
         <option value="M" selected>M (Medium)</option>
@@ -28,9 +29,21 @@
         <option value="H">H (Highest)</option>
     </select>
     <button onclick="generateQRCode()">Generate QR Code</button>
+    
+    <label for="format">Select Format: </label>
+    <select id="format">
+        <option value="jpeg" selected>JPEG</option>
+        <option value="png">PNG</option>
+        <option value="svg">SVG</option>
+        <option value="pdf">PDF</option>
+    </select>
+    <button onclick="downloadQRCode()">Download QR Code</button>
+
     <div id="qrCodeResult"></div>
 
     <script>
+        let generatedQRCode = ''; // To store the generated QR code URL
+
         function generateQRCode() {
             const url = document.getElementById("url").value;
             const size = parseInt(document.getElementById("size").value) || 250;
@@ -44,9 +57,53 @@
                     console.error(err);
                     return;
                 }
+                generatedQRCode = url; // Save the generated QR code
                 document.getElementById("qrCodeResult").innerHTML = `<img src="${url}" alt="QR Code">`;
             });
+        }
+
+        function downloadQRCode() {
+            if (!generatedQRCode) {
+                alert('Please generate a QR code first.');
+                return;
+            }
+
+            const format = document.getElementById("format").value;
+            let link = document.createElement('a');
+            link.href = generatedQRCode;
+            
+            if (format === 'svg') {
+                // If the user selected SVG, generate the SVG format instead of PNG
+                QRCode.toString(document.getElementById("url").value, {
+                    type: 'svg',
+                    width: parseInt(document.getElementById("size").value) || 250,
+                    errorCorrectionLevel: document.getElementById("ecl").value
+                }, function (err, svg) {
+                    if (err) {
+                        console.error(err);
+                        return;
+                    }
+                    const svgBlob = new Blob([svg], {type: 'image/svg+xml'});
+                    const svgUrl = URL.createObjectURL(svgBlob);
+                    link.href = svgUrl;
+                    link.download = 'qr_code.svg';  // Specify the file name
+                    link.click();
+                });
+            } else if (format === 'pdf') {
+                // If the user selected PDF, generate PDF file with jsPDF
+                const { jsPDF } = window.jspdf;
+                const doc = new jsPDF();
+                doc.addImage(generatedQRCode, 'JPEG', 10, 10, 180, 180); // Adjust the size if needed
+                link.href = doc.output('bloburl');
+                link.download = 'qr_code.pdf'; // Specify the file name
+                link.click();
+            } else {
+                // For PNG or JPEG, use the URL generated earlier
+                link.download = `qr_code.${format}`;  // Specify the file name with selected extension
+                link.click();
+            }
         }
     </script>
 </body>
 </html>
+
