@@ -4,97 +4,28 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>DORA-QR Generator</title>
+    <link rel="stylesheet" href="style.css">
     <script src="https://cdn.jsdelivr.net/npm/qrcode@1.4.4/build/qrcode.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            text-align: center;
-            padding: 50px;
-        }
-
-        .form-container {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            width: 100%;
-        }
-
-        .form-group {
-            display: flex;
-            align-items: center;
-            margin: 10px 0;
-            width: 100%;
-            max-width: 500px;
-        }
-
-        .form-group label {
-            font-weight: bold;
-            width: 150px;
-            text-align: right; /* Allinea a destra le etichette */
-            margin-right: 10px;
-        }
-
-        .form-group input,
-        .form-group select {
-            padding: 10px;
-            width: 100%;
-            max-width: 300px;
-            box-sizing: border-box;
-        }
-
-        #generateButton {
-            margin-top: 20px;
-            padding: 12px 20px;
-            font-size: 16px;
-            background-color: #4CAF50;
-            color: white;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-            transition: background-color 0.3s ease;
-        }
-
-        #generateButton:hover {
-            background-color: #45a049;
-        }
-
-        #qrCodeResult img {
-            margin-top: 20px;
-            max-width: 100%;
-            height: auto;
-        }
-
-        #downloadSection {
-            margin-top: 30px;
-            text-align: center;
-        }
-
-        #downloadSection select,
-        #downloadSection button {
-            padding: 10px;
-            margin: 10px;
-        }
-    </style>
 </head>
 <body>
     <h1>DORA-QR Generator</h1>
     <p>Generate a QR code from a URL and download it in your preferred format!</p>
 
     <div class="form-container">
-        <!-- Input for URL -->
+        <!-- Input per l'URL -->
         <div class="form-group">
             <label for="url">URL:</label>
             <input type="text" id="url" placeholder="Enter URL" required>
         </div>
 
-        <!-- Input for QR code size -->
+        <!-- Input per la dimensione del codice QR -->
         <div class="form-group">
             <label for="size">QR Code Size (px):</label>
             <input type="number" id="size" placeholder="Size (px)" value="250" required>
         </div>
 
-        <!-- Dropdown for error correction level -->
+        <!-- Dropdown per il livello di correzione degli errori -->
         <div class="form-group">
             <label for="ecl">Error Correction Level:</label>
             <select id="ecl">
@@ -108,7 +39,7 @@
         <button id="generateButton" onclick="generateQRCode()">Generate QR Code</button>
     </div>
 
-    <!-- Display generated QR Code -->
+    <!-- Display QR Code -->
     <div id="qrCodeResult"></div>
 
     <!-- Download Section -->
@@ -126,76 +57,6 @@
         <button onclick="downloadQRCode()">Download QR Code</button>
     </div>
 
-    <script>
-        let generatedQRCode = ''; // To store the generated QR code URL
-        let qrCodeSVG = ''; // To store the generated SVG code
-
-        function generateQRCode() {
-            const url = document.getElementById("url").value;
-            const size = parseInt(document.getElementById("size").value) || 250;
-            const ecl = document.getElementById("ecl").value;
-
-            // Generate the QR Code as a Data URL (PNG/JPEG)
-            QRCode.toDataURL(url, {
-                width: size,
-                errorCorrectionLevel: ecl
-            }, function (err, url) {
-                if (err) {
-                    console.error(err);
-                    return;
-                }
-                generatedQRCode = url; // Save the generated QR code (PNG/JPEG)
-                document.getElementById("qrCodeResult").innerHTML = `<img src="${url}" alt="QR Code">`;
-
-                // Generate the QR Code as an SVG string
-                QRCode.toString(url, {
-                    type: 'svg',
-                    width: size,
-                    errorCorrectionLevel: ecl
-                }, function (err, svg) {
-                    if (err) {
-                        console.error(err);
-                        return;
-                    }
-                    qrCodeSVG = svg; // Save the generated SVG
-                });
-
-                // Display the download section
-                document.getElementById("downloadSection").style.display = 'block';
-            });
-        }
-
-        function downloadQRCode() {
-            if (!generatedQRCode) {
-                alert('Please generate a QR code first.');
-                return;
-            }
-
-            const format = document.getElementById("format").value;
-            let link = document.createElement('a');
-
-            if (format === 'svg') {
-                // Download as SVG
-                const svgBlob = new Blob([qrCodeSVG], {type: 'image/svg+xml'});
-                const svgUrl = URL.createObjectURL(svgBlob);
-                link.href = svgUrl;
-                link.download = 'qr_code.svg'; // File name for SVG
-                link.click();
-            } else if (format === 'pdf') {
-                // Download as PDF
-                const { jsPDF } = window.jspdf;
-                const doc = new jsPDF();
-                doc.addImage(generatedQRCode, 'JPEG', 10, 10, 180, 180); // Adjust the size if needed
-                link.href = doc.output('bloburl');
-                link.download = 'qr_code.pdf'; // File name for PDF
-                link.click();
-            } else {
-                // For PNG or JPEG, use the Data URL generated earlier
-                link.href = generatedQRCode;
-                link.download = `qr_code.${format}`;  // Specify the file name with selected extension
-                link.click();
-            }
-        }
-    </script>
+    <script src="script.js"></script>
 </body>
 </html>
