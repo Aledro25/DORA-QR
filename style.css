@@ -87,4 +87,46 @@ body {
     font-size: 12px;
     white-space: nowrap;
     z-index: 1;
-    width: m
+    width: max-content;
+}
+
+.info-icon:hover::before {
+    content: "";
+    position: absolute;
+    border-width: 5px;
+    border-style: solid;
+    border-color: transparent;
+    z-index: 1;
+}
+
+/* Tooltip per schermi grandi */
+@media (min-width: 768px) {
+    .info-icon:hover::after {
+        left: 120%;
+        top: 50%;
+        transform: translateY(-50%);
+    }
+
+    .info-icon:hover::before {
+        left: 110%;
+        top: 50%;
+        transform: translateY(-50%);
+        border-color: transparent #333 transparent transparent;
+    }
+}
+
+/* Tooltip per schermi piccoli */
+@media (max-width: 767px) {
+    .info-icon:hover::after {
+        left: 50%;
+        top: 120%;
+        transform: translateX(-50%);
+    }
+
+    .info-icon:hover::before {
+        left: 50%;
+        top: 110%;
+        transform: translateX(-50%);
+        border-color: #333 transparent transparent transparent;
+    }
+}
