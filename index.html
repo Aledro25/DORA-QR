@@ -22,7 +22,7 @@
 
         .form-group {
             display: flex;
-            justify-content: space-between;
+            align-items: center;
             margin: 10px 0;
             width: 100%;
             max-width: 500px;
@@ -30,16 +30,33 @@
 
         .form-group label {
             font-weight: bold;
-            width: 200px;
-            text-align: right;
-            margin-right: 10px;
+            width: 150px;
+            text-align: left;
         }
 
         .form-group input,
         .form-group select {
             padding: 10px;
             width: 100%;
-            max-width: 250px;
+            max-width: 300px;
+            margin-left: 10px;
+            box-sizing: border-box;
+        }
+
+        #generateButton {
+            margin-top: 20px;
+            padding: 12px 20px;
+            font-size: 16px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        #generateButton:hover {
+            background-color: #45a049;
         }
 
         #qrCodeResult img {
@@ -88,7 +105,7 @@
             </select>
         </div>
 
-        <button onclick="generateQRCode()">Generate QR Code</button>
+        <button id="generateButton" onclick="generateQRCode()">Generate QR Code</button>
     </div>
 
     <!-- Display generated QR Code -->
