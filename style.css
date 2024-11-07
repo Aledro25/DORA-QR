@@ -32,6 +32,15 @@ body {
     width: 100%;
     max-width: 300px;
     box-sizing: border-box;
+    border: 2px solid #ccc;
+    border-radius: 5px;
+    transition: border-color 0.3s ease;
+}
+
+.form-group input:focus,
+.form-group select:focus {
+    border-color: #4CAF50;
+    outline: none;
 }
 
 #generateButton {
@@ -65,9 +74,17 @@ body {
 #downloadSection button {
     padding: 10px;
     margin: 10px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    font-size: 16px;
 }
 
-/* Icona informativa */
+#downloadSection select:focus,
+#downloadSection button:focus {
+    outline: none;
+    border-color: #4CAF50;
+}
+
 .info-icon {
     font-size: 18px;
     margin-left: 8px;
