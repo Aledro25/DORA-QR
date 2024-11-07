@@ -4,7 +4,15 @@ let qrCodeSVG = ''; // Memorizza il codice QR SVG
 function generateQRCode() {
     const url = document.getElementById("url").value;
     const size = parseInt(document.getElementById("size").value) || 250;
-    const ecl = document.getElementById("ecl").value;
+    const ecl = document.getElementById("ecl").value || "L";  // Imposta un valore di fallback per il livello di correzione
+
+    console.log("Input URL:", url);  // Aggiungi un log per verificare l'input
+
+    // Verifica che l'input non sia vuoto
+    if (!url) {
+        alert("Please enter a valid URL or text.");
+        return;
+    }
 
     // Genera il QR Code come URL Data (PNG/JPEG)
     QRCode.toDataURL(url, {
@@ -12,7 +20,8 @@ function generateQRCode() {
         errorCorrectionLevel: ecl
     }, function (err, url) {
         if (err) {
-            console.error(err);
+            console.error("Error generating QR Code:", err);
+            alert("An error occurred while generating the QR code. Please try again.");
             return;
         }
         generatedQRCode = url;
@@ -25,7 +34,7 @@ function generateQRCode() {
             errorCorrectionLevel: ecl
         }, function (err, svg) {
             if (err) {
-                console.error(err);
+                console.error("Error generating QR Code SVG:", err);
                 return;
             }
             qrCodeSVG = svg;
@@ -45,7 +54,7 @@ function downloadQRCode() {
     let link = document.createElement('a');
 
     if (format === 'svg') {
-        const svgBlob = new Blob([qrCodeSVG], { type: 'image/svg+xml' });
+        const svgBlob = new Blob([qrCodeSVG], {type: 'image/svg+xml'});
         const svgUrl = URL.createObjectURL(svgBlob);
         link.href = svgUrl;
         link.download = 'qr_code.svg';
