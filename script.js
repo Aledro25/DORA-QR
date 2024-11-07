@@ -1,5 +1,4 @@
 let generatedQRCode = ''; // Memorizza il codice QR generato (URL)
-let qrCodeSVG = ''; // Memorizza il codice QR SVG
 
 function generateQRCode() {
     const url = document.getElementById("url").value.trim();  // Rimuovi gli spazi prima e dopo
@@ -28,20 +27,6 @@ function generateQRCode() {
         }
         generatedQRCode = url;
         document.getElementById("qrCodeResult").innerHTML = `<img src="${url}" alt="QR Code">`;
-
-        // Genera il QR Code come stringa SVG
-        QRCode.toString(url, {
-            type: 'svg',
-            width: size,
-            errorCorrectionLevel: ecl
-        }, function (err, svg) {
-            if (err) {
-                console.error('Error generating QR Code SVG:', err);
-                return;
-            }
-            qrCodeSVG = svg;
-        });
-
         document.getElementById("downloadSection").style.display = 'block';
     });
 }
@@ -55,13 +40,7 @@ function downloadQRCode() {
     const format = document.getElementById("format").value;
     let link = document.createElement('a');
 
-    if (format === 'svg') {
-        const svgBlob = new Blob([qrCodeSVG], {type: 'image/svg+xml'});
-        const svgUrl = URL.createObjectURL(svgBlob);
-        link.href = svgUrl;
-        link.download = 'qr_code.svg';
-        link.click();
-    } else if (format === 'pdf') {
+    if (format === 'pdf') {
         const { jsPDF } = window.jspdf;
         const doc = new jsPDF();
         doc.addImage(generatedQRCode, 'JPEG', 10, 10, 180, 180);
