@@ -59,6 +59,22 @@ body {
     background-color: #45a049;
 }
 
+#resetButton {
+    margin-top: 20px;
+    padding: 12px 20px;
+    font-size: 16px;
+    background-color: #f44336; /* Colore rosso per il reset */
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+#resetButton:hover {
+    background-color: #e53935; /* Colore più scuro al passaggio del mouse */
+}
+
 #qrCodeResult img {
     margin-top: 20px;
     max-width: 100%;
