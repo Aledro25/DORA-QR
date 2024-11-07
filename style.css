@@ -1,14 +1,19 @@
-/* Stili generali per l'icona informativa */
-.info-icon {
-    font-size: 18px;
-    margin-left: 8px;
-    color: #4CAF50;
-    cursor: pointer;
-    position: relative;
-    display: inline-block;
+/* Stili generali per il body */
+body {
+    font-family: Arial, sans-serif;
+    text-align: center;
+    padding: 50px;
 }
 
-/* Posizionamento e visibilità dell'info-icon */
+/* Contenitore del form */
+.form-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+}
+
+/* Gruppo di input (URL, dimensione, ecc.) */
 .form-group {
     display: flex;
     align-items: center; /* Allinea verticalmente gli elementi */
@@ -23,7 +28,81 @@
     font-size: 1.1em;
 }
 
+/* Stili generali per input e select */
+.form-group input,
+.form-group select {
+    padding: 10px;
+    width: 100%;
+    max-width: 300px;
+    box-sizing: border-box;
+    border: 2px solid #ccc;
+    border-radius: 5px;
+    transition: border-color 0.3s ease;
+}
+
+.form-group input:focus,
+.form-group select:focus {
+    border-color: #4CAF50;
+    outline: none;
+}
+
+/* Stili per il bottone di generazione */
+#generateButton {
+    margin-top: 20px;
+    padding: 12px 20px;
+    font-size: 16px;
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+#generateButton:hover {
+    background-color: #45a049;
+}
+
+/* Visualizzazione del codice QR generato */
+#qrCodeResult img {
+    margin-top: 20px;
+    max-width: 100%;
+    height: auto;
+}
+
+/* Sezione di download */
+#downloadSection {
+    margin-top: 30px;
+    text-align: center;
+}
+
+/* Stili per il dropdown e il bottone di download */
+#downloadSection select,
+#downloadSection button {
+    padding: 10px;
+    margin: 10px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    font-size: 16px;
+}
+
+#downloadSection select:focus,
+#downloadSection button:focus {
+    outline: none;
+    border-color: #4CAF50;
+}
+
 /* Tooltip per icona informativa */
+.info-icon {
+    font-size: 18px;
+    margin-left: 8px;
+    color: #4CAF50;
+    cursor: pointer;
+    position: relative;
+    display: inline-block;
+}
+
+/* Tooltip quando si passa sopra l'icona */
 .info-icon:hover::after {
     content: attr(title);
     position: absolute;
