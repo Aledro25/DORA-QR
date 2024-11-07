@@ -1,63 +1,53 @@
-/* Resetta i margini e i padding di base */
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-}
-
-/* Stili generali per il corpo */
+/* Stili generali per il body */
 body {
     font-family: Arial, sans-serif;
-    background-color: #f4f4f4;
-    color: #333;
-    padding: 20px;
     text-align: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    margin: 0;
+    padding: 0;
+    background-color: #f7f7f7;
 }
 
-/* Stili per il titolo e il paragrafo */
-h1 {
-    font-size: 2em;
-    margin-bottom: 20px;
-}
-
-p {
-    margin-bottom: 40px;
-}
-
-/* Container principale del form */
-.form-container {
+/* Contenitore principale centrato */
+.container {
     display: flex;
     flex-direction: column;
     align-items: center;
     width: 100%;
     max-width: 600px;
-    margin: 0 auto;
+    padding: 20px;
+    box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.1);
+    background-color: white;
+    border-radius: 8px;
 }
 
-/* Stili per i gruppi del form */
+/* Gruppo di input (URL, dimensione, ecc.) */
 .form-group {
     display: flex;
-    flex-direction: column;
-    align-items: flex-start;
+    align-items: center;
+    justify-content: space-between;
     margin: 10px 0;
     width: 100%;
 }
 
 .form-group label {
     font-weight: bold;
-    margin-bottom: 5px;
+    margin-right: 10px;
     font-size: 1.1em;
 }
 
+/* Stili generali per input e select */
 .form-group input,
 .form-group select {
     padding: 10px;
     width: 100%;
-    max-width: 400px;
+    max-width: 300px;
     box-sizing: border-box;
     border: 2px solid #ccc;
     border-radius: 5px;
-    font-size: 1em;
     transition: border-color 0.3s ease;
 }
 
@@ -67,35 +57,24 @@ p {
     outline: none;
 }
 
-/* Stili per i pulsanti */
-#generateButton,
-#resetButton {
+/* Stili per il bottone di generazione */
+#generateButton {
+    margin-top: 20px;
     padding: 12px 20px;
-    font-size: 1.2em;
+    font-size: 16px;
     background-color: #4CAF50;
     color: white;
     border: none;
     border-radius: 5px;
     cursor: pointer;
-    margin-top: 20px;
     transition: background-color 0.3s ease;
 }
 
-#generateButton:hover,
-#resetButton:hover {
+#generateButton:hover {
     background-color: #45a049;
 }
 
-/* Pulsante di reset con colore rosso */
-#resetButton {
-    background-color: #f44336;
-}
-
-#resetButton:hover {
-    background-color: #e53935;
-}
-
-/* Sezione per il risultato del QR code */
+/* Visualizzazione del codice QR generato */
 #qrCodeResult img {
     margin-top: 20px;
     max-width: 100%;
@@ -108,13 +87,20 @@ p {
     text-align: center;
 }
 
+/* Stili per il dropdown e il bottone di download */
 #downloadSection select,
 #downloadSection button {
     padding: 10px;
     margin: 10px;
     border-radius: 5px;
     border: 1px solid #ccc;
-    font-size: 1em;
+    font-size: 16px;
+}
+
+#downloadSection select:focus,
+#downloadSection button:focus {
+    outline: none;
+    border-color: #4CAF50;
 }
 
 /* Tooltip per icona informativa */
@@ -127,6 +113,7 @@ p {
     display: inline-block;
 }
 
+/* Tooltip quando si passa sopra l'icona */
 .info-icon:hover::after {
     content: attr(title);
     position: absolute;
@@ -179,90 +166,19 @@ p {
         transform: translateX(-50%);
         border-color: #333 transparent transparent transparent;
     }
-}
 
-/* Media Queries per dispositivi mobili */
-@media (max-width: 767px) {
-    body {
-        padding: 10px;
-    }
-
-    h1 {
-        font-size: 1.6em;
-    }
-
-    .form-container {
-        max-width: 90%;
-    }
-
-    .form-group input,
-    .form-group select {
-        max-width: 100%;
-    }
-
-    #generateButton,
-    #resetButton {
-        width: 100%;
-        font-size: 1em;
-        padding: 12px;
-    }
-
-    #downloadSection select,
-    #downloadSection button {
-        width: 100%;
-        font-size: 1em;
-        padding: 12px;
+    .form-group {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
     }
 
     .info-icon {
-        font-size: 16px;
-    }
-}
-
-/* Media Queries per tablet e schermi medi */
-@media (min-width: 768px) and (max-width: 1024px) {
-    .form-container {
-        max-width: 80%;
+        margin-left: 0;
+        margin-top: 10px;
     }
 
-    .form-group input,
-    .form-group select {
-        max-width: 90%;
-    }
-
-    #generateButton,
-    #resetButton {
-        width: 100%;
-    }
-
-    #downloadSection select,
-    #downloadSection button {
-        width: 100%;
-    }
-
-    .info-icon {
-        font-size: 17px;
-    }
-}
-
-/* Media Queries per desktop e schermi grandi */
-@media (min-width: 1025px) {
-    .form-container {
-        max-width: 600px;
-    }
-
-    .form-group input,
-    .form-group select {
-        max-width: 400px;
-    }
-
-    #generateButton,
-    #resetButton {
-        width: auto;
-    }
-
-    #downloadSection select,
-    #downloadSection button {
-        width: auto;
+    .form-group label {
+        margin-bottom: 5px;
     }
 }
