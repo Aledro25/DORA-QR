@@ -1,24 +1,25 @@
-// Verifica integrità jsPDF
-document.addEventListener("DOMContentLoaded", function() {
-    if (typeof window.jspdf === "undefined") {
-        console.error("Error: jsPDF library failed to load or has been tampered with.");
-    } else {
-        console.log("jsPDF library loaded successfully and integrity verified.");
-    }
-});
-
 // Funzione per generare il QR code
 function generateQRCode() {
     const url = document.getElementById("url").value;
     const size = parseInt(document.getElementById("size").value) || 250;
     const ecl = document.getElementById("ecl").value;
 
-    QRCode.toCanvas(document.getElementById("qrCodeResult"), url, {
+    const qrCodeContainer = document.getElementById("qrCodeResult");
+
+    // Rimuove qualsiasi canvas precedente
+    qrCodeContainer.innerHTML = "";
+
+    // Crea un nuovo canvas e lo aggiunge al container
+    const canvas = document.createElement("canvas");
+    qrCodeContainer.appendChild(canvas);
+
+    QRCode.toCanvas(canvas, url, {
         width: size,
         errorCorrectionLevel: ecl
     }, function (error) {
-        if (error) console.error(error);
-        else {
+        if (error) {
+            console.error(error);
+        } else {
             document.getElementById("downloadSection").style.display = "block";
             console.log("QR Code generated successfully.");
         }
