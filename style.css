@@ -68,6 +68,16 @@ p {
     outline: none;
 }
 
+/* Centra il testo all'interno del select per ECL */
+#ecl {
+    text-align: center; /* Centra il testo orizzontalmente */
+}
+
+/* Centra anche il testo nelle opzioni del select */
+#ecl option {
+    text-align: center;
+}
+
 /* Stili per i pulsanti */
 #generateButton,
 #resetButton {
