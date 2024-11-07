@@ -6,11 +6,8 @@ function generateQRCode() {
     const size = parseInt(document.getElementById("size").value) || 250;
     const ecl = document.getElementById("ecl").value;
 
-    // Log dell'input URL per il controllo
-    console.log("Input URL:", url);
-
     // Verifica se l'URL è troppo lungo per essere gestito da un QR Code
-    const maxQRCodeDataLength = 2953;  // Limite di dati per un QR code al livello di correzione H (Higher)
+    const maxQRCodeDataLength = 2953;  // Limite di dati per un QR code al livello di correzione H (Highest)
     
     if (url.length > maxQRCodeDataLength) {
         alert('The URL is too long to be stored in a QR Code.');
