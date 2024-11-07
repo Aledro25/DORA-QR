@@ -1,70 +1,65 @@
-// Funzione per generare il QR code
+let generatedQRCode = ''; // Memorizza il codice QR generato (URL)
+let qrCodeSVG = ''; // Memorizza il codice QR SVG
+
 function generateQRCode() {
     const url = document.getElementById("url").value;
     const size = parseInt(document.getElementById("size").value) || 250;
     const ecl = document.getElementById("ecl").value;
 
-    const qrCodeContainer = document.getElementById("qrCodeResult");
-
-    // Rimuove qualsiasi canvas precedente
-    qrCodeContainer.innerHTML = "";
-
-    // Crea un nuovo canvas e verifica che sia un elemento valido
-    const canvas = document.createElement("canvas");
-    if (!(canvas instanceof HTMLCanvasElement)) {
-        console.error("Errore nella creazione dell'elemento canvas.");
-        return;
-    }
-    qrCodeContainer.appendChild(canvas);
-
-    // Genera il QR code
-    QRCode.toCanvas(canvas, url, {
+    // Genera il QR Code come URL Data (PNG/JPEG)
+    QRCode.toDataURL(url, {
         width: size,
         errorCorrectionLevel: ecl
-    }, function (error) {
-        if (error) {
-            console.error("Errore nella generazione del QR Code:", error);
-        } else {
-            document.getElementById("downloadSection").style.display = "block";
-            console.log("QR Code generato con successo.");
+    }, function (err, url) {
+        if (err) {
+            console.error(err);
+            return;
         }
+        generatedQRCode = url;
+        document.getElementById("qrCodeResult").innerHTML = `<img src="${url}" alt="QR Code">`;
+
+        // Genera il QR Code come stringa SVG
+        QRCode.toString(url, {
+            type: 'svg',
+            width: size,
+            errorCorrectionLevel: ecl
+        }, function (err, svg) {
+            if (err) {
+                console.error(err);
+                return;
+            }
+            qrCodeSVG = svg;
+        });
+
+        document.getElementById("downloadSection").style.display = 'block';
     });
 }
 
-// Funzione per scaricare il QR code nel formato scelto
 function downloadQRCode() {
-    const format = document.getElementById("format").value;
-    const canvas = document.getElementById("qrCodeResult").querySelector("canvas");
-
-    if (!canvas) {
-        console.error("Nessun QR Code trovato. Genera il codice prima di scaricare.");
+    if (!generatedQRCode) {
+        alert('Please generate a QR code first.');
         return;
     }
 
-    if (format === "pdf") {
-        // Scarica il QR Code in formato PDF
-        const { jsPDF } = window.jspdf;
-        const pdf = new jsPDF();
-        pdf.addImage(canvas.toDataURL("image/png"), "PNG", 15, 40, 180, 180);
-        pdf.save("QRCode.pdf");
-    } else if (format === "svg") {
-        // Scarica il QR Code in formato SVG
-        const svgData = `
-            <svg xmlns="http://www.w3.org/2000/svg" width="${canvas.width}" height="${canvas.height}">
-                <image href="${canvas.toDataURL("image/png")}" width="100%" height="100%"/>
-            </svg>`;
-        const blob = new Blob([svgData], { type: "image/svg+xml;charset=utf-8" });
-        const url = URL.createObjectURL(blob);
-        const link = document.createElement("a");
-        link.href = url;
-        link.download = "QRCode.svg";
+    const format = document.getElementById("format").value;
+    let link = document.createElement('a');
+
+    if (format === 'svg') {
+        const svgBlob = new Blob([qrCodeSVG], {type: 'image/svg+xml'});
+        const svgUrl = URL.createObjectURL(svgBlob);
+        link.href = svgUrl;
+        link.download = 'qr_code.svg';
         link.click();
-        URL.revokeObjectURL(url);
+    } else if (format === 'pdf') {
+        const { jsPDF } = window.jspdf;
+        const doc = new jsPDF();
+        doc.addImage(generatedQRCode, 'JPEG', 10, 10, 180, 180);
+        link.href = doc.output('bloburl');
+        link.download = 'qr_code.pdf';
+        link.click();
     } else {
-        // Scarica il QR Code in formato JPEG o PNG
-        const link = document.createElement("a");
-        link.download = `QRCode.${format}`;
-        link.href = canvas.toDataURL(`image/${format === "jpeg" ? "jpeg" : "png"}`);
+        link.href = generatedQRCode;
+        link.download = `qr_code.${format}`;
         link.click();
     }
 }
