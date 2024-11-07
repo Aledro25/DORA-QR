@@ -2,15 +2,18 @@ let generatedQRCode = ''; // Memorizza il codice QR generato (URL)
 let qrCodeSVG = ''; // Memorizza il codice QR SVG
 
 function generateQRCode() {
-    const url = document.getElementById("url").value;
+    const url = document.getElementById("url").value.trim();  // Rimuovi gli spazi prima e dopo
     const size = parseInt(document.getElementById("size").value) || 250;
-    const ecl = document.getElementById("ecl").value || "L";  // Imposta un valore di fallback per il livello di correzione
+    const ecl = document.getElementById("ecl").value;
 
-    console.log("Input URL:", url);  // Aggiungi un log per verificare l'input
+    // Log dell'input URL per il controllo
+    console.log("Input URL:", url);
 
-    // Verifica che l'input non sia vuoto
-    if (!url) {
-        alert("Please enter a valid URL or text.");
+    // Verifica se l'URL è troppo lungo per essere gestito da un QR Code
+    const maxQRCodeDataLength = 2953;  // Limite di dati per un QR code al livello di correzione H (Higher)
+    
+    if (url.length > maxQRCodeDataLength) {
+        alert('The URL is too long to be stored in a QR Code.');
         return;
     }
 
@@ -20,8 +23,7 @@ function generateQRCode() {
         errorCorrectionLevel: ecl
     }, function (err, url) {
         if (err) {
-            console.error("Error generating QR Code:", err);
-            alert("An error occurred while generating the QR code. Please try again.");
+            console.error(err);
             return;
         }
         generatedQRCode = url;
@@ -34,7 +36,7 @@ function generateQRCode() {
             errorCorrectionLevel: ecl
         }, function (err, svg) {
             if (err) {
-                console.error("Error generating QR Code SVG:", err);
+                console.error('Error generating QR Code SVG:', err);
                 return;
             }
             qrCodeSVG = svg;
