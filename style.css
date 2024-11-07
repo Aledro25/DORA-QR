@@ -48,9 +48,10 @@ p {
     font-size: 1.1em;
 }
 
-/* Formattazione uniforme per input e select */
+/* Formattazione uniforme per input, select e altri elementi */
 .form-group input,
-.form-group select {
+.form-group select,
+#format {
     padding: 10px;
     width: 100%;
     max-width: 400px;
@@ -61,26 +62,30 @@ p {
     transition: border-color 0.3s ease;
 }
 
+/* Centra il testo all'interno del select per ECL e format */
+#ecl,
+#format {
+    text-align: center;
+}
+
+/* Centra anche il testo nelle opzioni del select */
+#ecl option,
+#format option {
+    text-align: center;
+}
+
 /* Focus styling per input e select */
 .form-group input:focus,
-.form-group select:focus {
+.form-group select:focus,
+#format:focus {
     border-color: #4CAF50;
     outline: none;
 }
 
-/* Centra il testo all'interno del select per ECL */
-#ecl {
-    text-align: center; /* Centra il testo orizzontalmente */
-}
-
-/* Centra anche il testo nelle opzioni del select */
-#ecl option {
-    text-align: center;
-}
-
 /* Stili per i pulsanti */
 #generateButton,
-#resetButton {
+#resetButton,
+button {
     padding: 12px 20px;
     font-size: 1.2em;
     background-color: #4CAF50;
@@ -207,7 +212,8 @@ p {
     }
 
     .form-group input,
-    .form-group select {
+    .form-group select,
+    #format {
         max-width: 100%;
     }
 
@@ -263,7 +269,8 @@ p {
     }
 
     .form-group input,
-    .form-group select {
+    .form-group select,
+    #format {
         max-width: 100%;
     }
 
