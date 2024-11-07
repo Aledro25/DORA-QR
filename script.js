@@ -45,7 +45,7 @@ function downloadQRCode() {
     let link = document.createElement('a');
 
     if (format === 'svg') {
-        const svgBlob = new Blob([qrCodeSVG], {type: 'image/svg+xml'});
+        const svgBlob = new Blob([qrCodeSVG], { type: 'image/svg+xml' });
         const svgUrl = URL.createObjectURL(svgBlob);
         link.href = svgUrl;
         link.download = 'qr_code.svg';
