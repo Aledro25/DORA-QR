@@ -49,6 +49,7 @@ p {
     font-size: 1.1em;
 }
 
+/* Formattazione uniforme per input e select */
 .form-group input,
 .form-group select {
     padding: 10px;
@@ -61,6 +62,7 @@ p {
     transition: border-color 0.3s ease;
 }
 
+/* Focus styling per input e select */
 .form-group input:focus,
 .form-group select:focus {
     border-color: #4CAF50;
