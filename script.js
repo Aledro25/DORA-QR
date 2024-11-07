@@ -9,8 +9,12 @@ function generateQRCode() {
     // Rimuove qualsiasi canvas precedente
     qrCodeContainer.innerHTML = "";
 
-    // Crea un nuovo canvas e lo aggiunge al container
+    // Crea un nuovo canvas e verifica che sia un elemento valido
     const canvas = document.createElement("canvas");
+    if (!(canvas instanceof HTMLCanvasElement)) {
+        console.error("Errore nella creazione dell'elemento canvas.");
+        return;
+    }
     qrCodeContainer.appendChild(canvas);
 
     // Genera il QR code
