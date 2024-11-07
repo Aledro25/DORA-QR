@@ -229,7 +229,7 @@ p {
 
     .form-group input,
     .form-group select {
-        max-width: 90%;
+        max-width: 100%;
     }
 
     #generateButton,
