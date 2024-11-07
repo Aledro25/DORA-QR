@@ -130,7 +130,7 @@ button {
     margin: 10px;
     border-radius: 5px;
     border: 1px solid #ccc;
-    font-size: 1em;
+    font-size: 1.2em;
 }
 
 /* Tooltip per icona informativa */
@@ -226,7 +226,7 @@ button {
 
     #downloadSection select,
     #downloadSection button {
-        width: 100%;
+        width: 90%;
         font-size: 1em;
         padding: 12px;
     }
@@ -254,7 +254,7 @@ button {
 
     #downloadSection select,
     #downloadSection button {
-        width: 100%;
+        width: auto;
     }
 
     .info-icon {
