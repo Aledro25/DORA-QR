@@ -116,6 +116,19 @@ button {
     transition: background-color 0.3s ease, transform 0.2s ease; /* Aggiungi transizione per effetto hover */
 }
 
+/* Pulsante disabilitato */
+#generateButton:disabled {
+    background-color: #dcdcdc; /* Colore di sfondo chiaro */
+    cursor: not-allowed; /* Cambia il cursore per indicare che il pulsante non è cliccabile */
+    opacity: 0.6; /* Riduci l'opacità per un effetto disabilitato */
+}
+
+/* Hover sugli input disabilitati */
+#generateButton:hover:disabled {
+    background-color: #dcdcdc;
+}
+
+/* Hover sugli altri pulsanti */
 #generateButton:hover,
 #resetButton:hover {
     background-color: #45a049;

@@ -1,6 +1,33 @@
 let generatedQRCode = ''; // Memorizza il codice QR generato (URL)
 let qrCodeSVG = ''; // Memorizza il codice QR SVG
 
+// Funzione per validare l'URL
+function isValidURL(url) {
+    try {
+        new URL(url);  // Tenta di creare un oggetto URL
+        return true;
+    } catch (_) {
+        return false;
+    }
+}
+
+// Funzione per abilitare o disabilitare il pulsante di generazione in base alla validità dell'URL
+function validateURLInput() {
+    const url = document.getElementById("url").value.trim();
+    const isValid = isValidURL(url);
+
+    // Se l'URL non è valido, disabilita il pulsante
+    if (!isValid) {
+        document.getElementById("generateButton").disabled = true; // Disabilita il pulsante
+    } else {
+        document.getElementById("generateButton").disabled = false; // Abilita il pulsante
+    }
+}
+
+// Aggiungi l'evento di ascolto sull'input URL
+document.getElementById("url").addEventListener("input", validateURLInput);
+
+// Funzione per generare il QR Code
 function generateQRCode() {
     const url = document.getElementById("url").value.trim();  // Rimuovi gli spazi prima e dopo
     const size = parseInt(document.getElementById("size").value) || 250;
@@ -29,6 +56,7 @@ function generateQRCode() {
     });
 }
 
+// Funzione per scaricare il QR Code
 function downloadQRCode() {
     const format = document.getElementById("format").value;
     const qrCodeCanvas = document.createElement('canvas');
@@ -62,10 +90,12 @@ function downloadQRCode() {
     };
 }
 
+// Funzione per ripristinare il modulo
 function resetForm() {
     document.getElementById("url").value = "";
     document.getElementById("size").value = 250;
     document.getElementById("ecl").value = "M";
     document.getElementById("qrCodeResult").innerHTML = ""; // Rimuovi il QR code generato
     document.getElementById("downloadSection").style.display = 'none'; // Nascondi la sezione di download
+    document.getElementById("generateButton").disabled = true; // Disabilita il pulsante di generazione all'inizio
 }
