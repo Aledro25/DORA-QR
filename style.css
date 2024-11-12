@@ -8,10 +8,20 @@
 /* Stili generali per il corpo */
 body {
     font-family: Arial, sans-serif;
-    background-color: #f4f4f4;
+    background-color: #ffcb85;
     color: #333;
     padding: 20px;
     text-align: center;
+}
+
+/* Wrapper per il contenuto principale con sfondo */
+.background-container {
+    background-color: #fdf5c9; /* Colore di sfondo desiderato */
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1); /* Opzionale, per aggiungere ombreggiatura */
+    margin: 0 auto;
+    max-width: 800px;
 }
 
 /* Stili per il titolo e il paragrafo */
@@ -59,7 +69,7 @@ p {
     border: 2px solid #ccc;
     border-radius: 5px;
     font-size: 1em;
-    transition: border-color 0.3s ease;
+    transition: border-color 0.3s ease, box-shadow 0.3s ease; /* Aggiungi transizione per box-shadow */
 }
 
 /* Centra il testo all'interno del select per ECL e format */
@@ -80,6 +90,15 @@ p {
 #format:focus {
     border-color: #4CAF50;
     outline: none;
+    box-shadow: 0 0 8px rgba(76, 175, 80, 0.6); /* Aggiungi ombra al focus */
+}
+
+/* Hover sugli input e select */
+.form-group input:hover,
+.form-group select:hover,
+#format:hover {
+    border-color: #45a049; /* Colore di bordo durante l'hover */
+    cursor: pointer; /* Cambia il cursore in una mano */
 }
 
 /* Stili per i pulsanti */
@@ -94,12 +113,13 @@ button {
     border-radius: 5px;
     cursor: pointer;
     margin-top: 20px;
-    transition: background-color 0.3s ease;
+    transition: background-color 0.3s ease, transform 0.2s ease; /* Aggiungi transizione per effetto hover */
 }
 
 #generateButton:hover,
 #resetButton:hover {
     background-color: #45a049;
+    transform: scale(1.05); /* Aggiungi un effetto di ingrandimento al passaggio del mouse */
 }
 
 /* Pulsante di reset con colore rosso */
@@ -204,7 +224,7 @@ button {
     }
 
     h1 {
-        font-size: 1.6em;
+        font-size: 2em;
     }
 
     .form-container {
