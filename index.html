@@ -1,16 +1,24 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    
     <script type="text/javascript">
         var _iub = _iub || [];
         _iub.csConfiguration = {"siteId":3838600,"cookiePolicyId":13062599,"lang":"it","storage":{"useSiteId":true}};
-        </script>
-        <script type="text/javascript" src="https://cs.iubenda.com/autoblocking/3838600.js">
-        </script>
-        <script type="text/javascript" src="//cdn.iubenda.com/cs/gpp/stub.js">
-        </script>
-        <script type="text/javascript" src="//cdn.iubenda.com/cs/iubenda_cs.js" charset="UTF-8" async>
-        </script>
+    </script>
+    <script type="text/javascript" src="https://cs.iubenda.com/autoblocking/3838600.js"></script>
+    <script type="text/javascript" src="//cdn.iubenda.com/cs/gpp/stub.js"></script>
+    <script type="text/javascript" src="//cdn.iubenda.com/cs/iubenda_cs.js" charset="UTF-8" async></script>
+
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-TF4J3S1MRT"></script>
+    <script>
+     window.dataLayer = window.dataLayer || [];
+     function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-TF4J3S1MRT');
+    </script>
+
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>DORA-QR Generator</title>
@@ -26,14 +34,18 @@
             </script>
     <script src="https://cdn.jsdelivr.net/npm/qrcode@1.4.4/build/qrcode.min.js"></script>
     <script src="script.js" defer></script>
+
 </head>
 <body>
+
     <!-- Wrapper per il contenuto principale con sfondo -->
     <div class="background-container">
         <h1>DORA-QR Generator</h1>
+
         <p>Generate a QR code from a URL and download it in your preferred format!</p>
 
         <div class="form-container">
+
             <!-- Input per l'URL -->
             <div class="form-group">
                 <label for="url">URL</label>
@@ -60,6 +72,7 @@
 
             <button id="generateButton" onclick="generateQRCode()" disabled>Generate QR Code</button>
             <button id="resetButton" onclick="resetForm()">Reset</button>
+
         </div>
 
         <!-- Display QR Code -->
@@ -78,6 +91,7 @@
             <br>
             <button onclick="downloadQRCode()">Download QR Code</button>
         </div>
+
     </div>
 </body>
 </html>
