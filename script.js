@@ -53,6 +53,18 @@ function generateQRCode() {
         generatedQRCode = url;
         document.getElementById("qrCodeResult").innerHTML = `<img src="${url}" alt="QR Code">`;
         document.getElementById("downloadSection").style.display = 'block'; // Mostra la sezione per il download
+
+        // Chiama la funzione per raccogliere i dati dell'URL
+        collectURLData(url);
+    });
+}
+
+// Funzione per raccogliere i dati dell'URL per Google Tag Manager
+function collectURLData(url) {
+    window.dataLayer = window.dataLayer || [];
+    window.dataLayer.push({
+        event: 'qrCodeGenerated',
+        url: url
     });
 }
 
@@ -69,25 +81,28 @@ function downloadQRCode() {
         qrCodeCanvas.height = img.height;
         context.drawImage(img, 0, 0);
         
+        let dataUrl;
         if (format === 'jpeg') {
-            const dataUrl = qrCodeCanvas.toDataURL('image/jpeg');
-            const a = document.createElement('a');
-            a.href = dataUrl;
-            a.download = 'qrcode.jpeg';
-            a.click();
+            dataUrl = qrCodeCanvas.toDataURL('image/jpeg');
+            downloadImage(dataUrl, 'qrcode.jpeg');
         } else if (format === 'png') {
-            const dataUrl = qrCodeCanvas.toDataURL('image/png');
-            const a = document.createElement('a');
-            a.href = dataUrl;
-            a.download = 'qrcode.png';
-            a.click();
+            dataUrl = qrCodeCanvas.toDataURL('image/png');
+            downloadImage(dataUrl, 'qrcode.png');
         } else if (format === 'pdf') {
             const { jsPDF } = window.jspdf;
             const doc = new jsPDF();
-            doc.addImage(qrCodeCanvas, 'JPEG', 10, 10, 180, 180);
+            doc.addImage(qrCodeCanvas.toDataURL('image/jpeg'), 'JPEG', 10, 10, 180, 180);
             doc.save('qrcode.pdf');
         }
     };
+}
+
+// Funzione per scaricare l'immagine
+function downloadImage(dataUrl, filename) {
+    const a = document.createElement('a');
+    a.href = dataUrl;
+    a.download = filename;
+    a.click();
 }
 
 // Funzione per ripristinare il modulo

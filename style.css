@@ -19,7 +19,7 @@ body {
     background-color: #fdf5c9; /* Colore di sfondo desiderato */
     padding: 20px;
     border-radius: 8px;
-    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1); /* Opzionale, per aggiungere ombreggiatura */
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1); /* Ombreggiatura */
     margin: 0 auto;
     max-width: 800px;
 }
@@ -65,22 +65,15 @@ p {
     padding: 10px;
     width: 100%;
     max-width: 400px;
-    box-sizing: border-box;
     border: 2px solid #ccc;
     border-radius: 5px;
     font-size: 1em;
-    transition: border-color 0.3s ease, box-shadow 0.3s ease; /* Aggiungi transizione per box-shadow */
+    transition: border-color 0.3s ease, box-shadow 0.3s ease; /* Transizione per box-shadow */
 }
 
 /* Centra il testo all'interno del select per ECL e format */
 #ecl,
 #format {
-    text-align: center;
-}
-
-/* Centra anche il testo nelle opzioni del select */
-#ecl option,
-#format option {
     text-align: center;
 }
 
@@ -90,7 +83,7 @@ p {
 #format:focus {
     border-color: #4CAF50;
     outline: none;
-    box-shadow: 0 0 8px rgba(76, 175, 80, 0.6); /* Aggiungi ombra al focus */
+    box-shadow: 0 0 8px rgba(76, 175, 80, 0.6); /* Ombra al focus */
 }
 
 /* Hover sugli input e select */
@@ -102,8 +95,6 @@ p {
 }
 
 /* Stili per i pulsanti */
-#generateButton,
-#resetButton,
 button {
     padding: 12px 20px;
     font-size: 1.2em;
@@ -113,26 +104,21 @@ button {
     border-radius: 5px;
     cursor: pointer;
     margin-top: 20px;
-    transition: background-color 0.3s ease, transform 0.2s ease; /* Aggiungi transizione per effetto hover */
+    transition: background-color 0.3s ease, transform 0.2s ease; /* Transizione per effetto hover */
 }
 
 /* Pulsante disabilitato */
 #generateButton:disabled {
     background-color: #dcdcdc; /* Colore di sfondo chiaro */
-    cursor: not-allowed; /* Cambia il cursore per indicare che il pulsante non è cliccabile */
+    cursor: not-allowed; /* Indica che il pulsante non è cliccabile */
     opacity: 0.6; /* Riduci l'opacità per un effetto disabilitato */
-}
-
-/* Hover sugli input disabilitati */
-#generateButton:hover:disabled {
-    background-color: #dcdcdc;
 }
 
 /* Hover sugli altri pulsanti */
 #generateButton:hover,
 #resetButton:hover {
     background-color: #45a049;
-    transform: scale(1.05); /* Aggiungi un effetto di ingrandimento al passaggio del mouse */
+    transform: scale(1.05); /* Effetto di ingrandimento al passaggio del mouse */
 }
 
 /* Pulsante di reset con colore rosso */
